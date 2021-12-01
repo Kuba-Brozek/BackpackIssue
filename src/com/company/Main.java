@@ -123,6 +123,7 @@ public class Main {
                     }
                 }
             }
+
             for(int j = 0; j < ChromosomesNumber; j++){
                 int ValueofFitFun = 0;
                 int CalculatedValue = 0;
@@ -135,6 +136,15 @@ public class Main {
                 ValueOfFitFunForAllChromosomes += ChromosomeList.get(j).getValueOfChromosome();
                 System.out.println(ChromosomeList.get(j).getChromosomeBinar());
                 System.out.println(ChromosomeList.get(j).getValueOfChromosome());
+            }
+            if (ValueOfFitFunForAllChromosomes > Final) {
+                Final = ValueOfFitFunForAllChromosomes;
+                NumOfFitListIterations = 1;
+            } else {
+                NumOfFitListIterations++;
+            }
+            if (NumOfFitListIterations == NumOfMaxFitFunOccur) {
+                break;
             }
             System.out.println(ValueOfFitFunForAllChromosomes);
 
@@ -205,20 +215,21 @@ public class Main {
                 }
             }
 
-
-
+            for(int i = 0; i< ChromosomesNumber; i++){
+                int decimal = Integer.parseInt(ChromosomeList.get(i).getChromosomeBinar(), 2);
+                ChromosomeList.get(i).setCh(decimal);
+                ChromosomeList2.get(i).setCh(decimal);
+            }
             NumOfIterations++;
-            if (ValueOfFitFunForAllChromosomes > Final) {
-                Final = ValueOfFitFunForAllChromosomes;
-                NumOfFitListIterations = 1;
-            } else if (ValueOfFitFunForAllChromosomes == Final) {
-                NumOfFitListIterations++;
-            }
-            if (NumOfFitListIterations == NumOfMaxFitFunOccur) {
-                System.out.println(NumOfIterations);
-                break;
-            }
-
+        }
+        System.out.println(" | Liczba iteracji: " + NumOfIterations+ " | ");
+        System.out.println(" | Suma funkcji przystosowania: "+ Final + " | ");
+        for(int i = 0; i< ChromosomesNumber; i++){
+            int j = i+1;
+            System.out.println(" | CH"+j+ " = " + ChromosomeList.get(i).getChromosomeBinar()+ " | ");
+            System.out.println(" | Fenotyp: " + ChromosomeList.get(i).getCh()+ " | ");
+            System.out.println(" | Funkcja przystosowania: " + ChromosomeList.get(i).getValueOfChromosome()+ " | ");
+            System.out.println(" | Waga chromosomu: " + ChromosomeList.get(i).getWeightOfChromosome()+ " | ");
         }
     }
 
@@ -240,11 +251,6 @@ public class Main {
     public static int Random16() {
         Random r = new Random();
         return r.nextInt((6 - 1) + 1) + 1;
-    }
-
-
-    public static int CalcFun(int a, int b, int c, int d, int x){
-        return (int) (a*(Math.pow(x, 3)) + b*(Math.pow(x, 2)) + c*x + d);
     }
 
     public static double PercentageValue(int a, int b){
