@@ -40,15 +40,10 @@ public class Main {
         int NumOfIterations = 0;
 
         /*for(int i = 0; i< 10; i++){
+        System.out.println("Podaj Wagę i Wartość dla " + i + " bitu: ");
             int Weight = scanner.nextInt();
-            ChromosomeList.get(i).setWeight(Weight);
-            ChromosomeList2.get(i).setWeight(Weight);
-        }
-
-        for(int i = 0; i< 10; i++){
             int Value = scanner.nextInt();
-            ChromosomeList.get(i).setValue(Value);
-            ChromosomeList2.get(i).setValue(Value);
+            VWList.add(new VW(Weight, Value));
         }
         */
         VWList.add(new VW(4,12));
@@ -82,6 +77,7 @@ public class Main {
         }
 
         int Final = 0;
+        int FinalCh = 0;
         for(;;) {
             int ValueOfFitFunForAllChromosomes = 0;
             double PercentageIterationValue = 0.00;
@@ -136,16 +132,36 @@ public class Main {
                 ValueOfFitFunForAllChromosomes += ChromosomeList.get(j).getValueOfChromosome();
                 System.out.println(ChromosomeList.get(j).getChromosomeBinar());
                 System.out.println(ChromosomeList.get(j).getValueOfChromosome());
+
+                if(ChromosomeList.get(j).getCh() > FinalCh){
+                    FinalCh = ChromosomeList.get(j).getCh();
+                    NumOfFitListIterations = 1;
+                }
+                else if (ChromosomeList.get(j).getCh() == FinalCh){
+                    NumOfFitListIterations++;
+                }
+
             }
             if (ValueOfFitFunForAllChromosomes > Final) {
                 Final = ValueOfFitFunForAllChromosomes;
+            }
+            if(NumOfFitListIterations == NumOfMaxFitFunOccur){
+                break;
+            }
+
+
+            /*
+            if (ValueOfFitFunForAllChromosomes > Final) {
+                Final = ValueOfFitFunForAllChromosomes;
                 NumOfFitListIterations = 1;
-            } else {
+            } else if(ValueOfFitFunForAllChromosomes == Final){
                 NumOfFitListIterations++;
             }
             if (NumOfFitListIterations == NumOfMaxFitFunOccur) {
                 break;
-            }
+            } */
+
+
             System.out.println(ValueOfFitFunForAllChromosomes);
 
             for(int i = 0; i<ChromosomesNumber; i++){
@@ -223,12 +239,13 @@ public class Main {
             NumOfIterations++;
         }
         System.out.println(" | Liczba iteracji: " + NumOfIterations+ " | ");
-        System.out.println(" | Suma funkcji przystosowania: "+ Final + " | ");
+        System.out.println("Największy fenotyp: "+FinalCh);
+        //System.out.println(" | Suma funkcji przystosowania: "+ Final + " | ");
         for(int i = 0; i< ChromosomesNumber; i++){
             int j = i+1;
-            System.out.println(" | CH"+j+ " = " + ChromosomeList.get(i).getChromosomeBinar()+ " | ");
-            System.out.println(" | Fenotyp: " + ChromosomeList.get(i).getCh()+ " | ");
-            System.out.println(" | Funkcja przystosowania: " + ChromosomeList.get(i).getValueOfChromosome()+ " | ");
+            System.out.print(" | CH"+j+ " = " + ChromosomeList.get(i).getChromosomeBinar()+ " | ");
+            System.out.print(" | Fenotyp: " + ChromosomeList.get(i).getCh()+ " | ");
+            System.out.print(" | Funkcja przystosowania: " + ChromosomeList.get(i).getValueOfChromosome()+ " | ");
             System.out.println(" | Waga chromosomu: " + ChromosomeList.get(i).getWeightOfChromosome()+ " | ");
         }
     }
