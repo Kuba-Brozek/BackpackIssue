@@ -9,9 +9,11 @@ public class Chromosome {
     int ValueOfChromosome =0;
 
 
-    public Chromosome (int Ch){
+    public Chromosome (int Ch, double Percent){
         this.Ch = Ch;
+        this.Percent = Percent;
     }
+
 
     public Chromosome(int ch, String chromosomeBinar, double percent, int weightOfChromosome, int valueOfChromosome) {
         Ch = ch;

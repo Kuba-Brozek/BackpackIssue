@@ -64,8 +64,9 @@ public class Main {
 
         for ( int i=0; i<ChromosomesNumber; i++){
             int RandNumHelper = RandomNumberChromosome();
-            ChromosomeList.add(new Chromosome(RandNumHelper));
-            ChromosomeList2.add(new Chromosome(RandNumHelper));
+            ChromosomeList.add(new Chromosome(RandNumHelper, 0.0));
+            ChromosomeList2.add(new Chromosome(RandNumHelper, 0.0));
+            PercentageRangeList.add(new PercentageRangeClass(0.0,0.0));
             System.out.println(" | Początkowa pula chromosomów: " + ChromosomeList.get(i).getCh() + " | ");
         }
 
@@ -76,71 +77,154 @@ public class Main {
             }
             String BinarValue = BinarValueBuilder.toString();
             ChromosomeList.get(i).setChromosomeBinar(BinarValue);
-            System.out.println(ChromosomeList.get(i).getChromosomeBinar());
+
             ChromosomeList2.get(i).setChromosomeBinar(BinarValue);
         }
 
         int Final = 0;
-        //for(;;) {
+        for(;;) {
+            int ValueOfFitFunForAllChromosomes = 0;
             double PercentageIterationValue = 0.00;
             double aValuePercent = 0;
             int ValueOfFitFun = 0;
 
             for (int j = 0; j < ChromosomesNumber; j++) {
+                System.out.println(ChromosomeList.get(j).getChromosomeBinar());
+                //that loop calculates Weight of each chromosome based on users keyboard input, checks if weight is bigger than admissible, and if so it throws one of bits from 1 to 0 untill
+                // it finds first weight which is below limit
                 int WeightOfFitFun = 0;
                 int CalculatedWeight = 0;
                 for (int i = 0; i < 10; i++) {
                     char Checker = ChromosomeList.get(j).getChromosomeBinar().charAt(i);
-                    CalculatedWeight = Integer.parseInt(String.valueOf(Checker)) *VWList.get(i).getWeight();
+                    CalculatedWeight = Integer.parseInt(String.valueOf(Checker)) * VWList.get(i).getWeight();
                     WeightOfFitFun += CalculatedWeight;
                 }
                 ChromosomeList.get(j).setWeightOfChromosome(WeightOfFitFun);
-                /*
-                for(int i=0; i<ChromosomesNumber;i++) {
-                    while (MaxWeight > WeightListCalculated.get(i)) {
-                        double x = RandomPercentageNumber();
-                        int Lokus = RandomNumberLokusPm();
-                        if(x<Pm){
-                            String Beg = ChromosomeList.get(i).getChromosomeBinar().substring(0,Lokus-1);
-                            String End = ChromosomeList.get(i).getChromosomeBinar().substring(Lokus);
-                            String Mutate = ChromosomeList.get(i).getChromosomeBinar().substring(Lokus-1, Lokus);
-
-                            if(Mutate.equals("0")){
-                                String ChromosomeBinarFinal = Beg.concat("1"+End);
-                                ChromosomeList.get(i).setChromosomeBinar(ChromosomeBinarFinal);
-                            }
-                            else if(Mutate.equals("1")){
-                                String ChromosomeBinarFinal = Beg.concat("0"+End);
-                                ChromosomeList.get(i).setChromosomeBinar(ChromosomeBinarFinal);
-                            }
+                System.out.println(ChromosomeList.get(j).getWeightOfChromosome());
+                if (MaxWeight < ChromosomeList.get(j).getWeightOfChromosome()){
+                    for (;;) {
+                        int Bit = RandomNumberLokusPm();
+                        String Beg = ChromosomeList.get(j).getChromosomeBinar().substring(0, Bit - 1);
+                        String End = ChromosomeList.get(j).getChromosomeBinar().substring(Bit);
+                        String Mutate = String.valueOf(ChromosomeList.get(j).getChromosomeBinar().charAt(Bit - 1));
+                        if (Mutate.equals("1")) {
+                            String ChromosomeBinarFinal = Beg + "0" + End;
+                            ChromosomeList.get(j).setChromosomeBinar(ChromosomeBinarFinal);
+                            ChromosomeList2.get(j).setChromosomeBinar(ChromosomeBinarFinal);
+                            int decimal = Integer.parseInt(ChromosomeList.get(j).getChromosomeBinar(),2);
+                            ChromosomeList.get(j).setCh(decimal);
+                            ChromosomeList2.get(j).setCh(decimal);
+                            ChromosomeList.get(j).setWeightOfChromosome(ChromosomeList.get(j).getWeightOfChromosome() - VWList.get(Bit - 1).getWeight());
+                            ChromosomeList2.get(j).setWeightOfChromosome(ChromosomeList.get(j).getWeightOfChromosome() - VWList.get(Bit - 1).getWeight());
+                        }
+                        if (MaxWeight > ChromosomeList.get(j).getWeightOfChromosome()) {
+                            break;
                         }
                     }
-                }*/
-                //ChromosomeList.get(j).setWeight(WeightOfFitFun);
+                }
+            }
+            for(int j = 0; j < ChromosomesNumber; j++){
+                int ValueofFitFun = 0;
+                int CalculatedValue = 0;
+                for (int i = 0; i < 10; i++) {
+                    char Checker = ChromosomeList.get(j).getChromosomeBinar().charAt(i);
+                    CalculatedValue = Integer.parseInt(String.valueOf(Checker)) * VWList.get(i).getValue();
+                    ValueofFitFun += CalculatedValue;
+                }
+                ChromosomeList.get(j).setValueOfChromosome(ValueofFitFun);
+                ValueOfFitFunForAllChromosomes += ChromosomeList.get(j).getValueOfChromosome();
+                System.out.println(ChromosomeList.get(j).getChromosomeBinar());
+                System.out.println(ChromosomeList.get(j).getValueOfChromosome());
+            }
+            System.out.println(ValueOfFitFunForAllChromosomes);
 
+            for(int i = 0; i<ChromosomesNumber; i++){
+                ChromosomeList.get(i).setPercent(PercentageValue(ChromosomeList.get(i).getValueOfChromosome(),ValueOfFitFunForAllChromosomes));
             }
-            for(int i=0;i<6;i++){
-                System.out.println(ChromosomeList.get(i).getWeightOfChromosome());
+            for(int i = 0; i< ChromosomesNumber; i++){
+                aValuePercent = PercentageIterationValue;
+                PercentageIterationValue += ChromosomeList.get(i).getPercent();
+                PercentageRangeList.set(i, new PercentageRangeClass(aValuePercent, PercentageIterationValue));
+                System.out.println(PercentageRangeList.get(i).getA() + " ");
+                System.out.print(PercentageRangeList.get(i).getB());
             }
-            /*
-            if (ValueOfFitFun > Final) {
-                Final = ValueOfFitFun;
+            for(int i=0; i< ChromosomesNumber; i++){
+                double x = RandomPercentageNumber();
+                for(int j=0; j< ChromosomesNumber; j++){
+                    if( x > PercentageRangeList.get(j).a && x < PercentageRangeList.get(j).b){
+                        ChromosomeList.get(i).setCh(ChromosomeList2.get(j).getCh());
+                    }
+                }
+            }
+            for(int i = 0; i < ChromosomesNumber; i++) {
+                ChromosomeList2.get(i).setCh(ChromosomeList.get(i).getCh());
+                StringBuilder BinarValueBuilder = new StringBuilder(Integer.toBinaryString(ChromosomeList.get(i).getCh()));
+                while (BinarValueBuilder.length() < 10) {
+                    BinarValueBuilder.insert(0, "0");
+                }
+                String BinarValue = BinarValueBuilder.toString();
+                ChromosomeList.get(i).setChromosomeBinar(BinarValue);
+                ChromosomeList2.get(i).setChromosomeBinar(BinarValue);
+            }
+
+            int PkhelperNumber = 0;
+            for(int i = 0; i < ChromosomesNumber/2; i++) {
+                double x = RandomPercentageNumber();
+                int random16 = Random16();
+                int random162 = Random16();
+                PkhelperNumber += 2;
+                int Lokus = RandomNumberLokusPk();
+
+                if(x< Pk){
+                    String BegOneOf2 = ChromosomeList2.get(random16-1).getChromosomeBinar().substring(0, Lokus);
+                    String BegTwoOf2 = ChromosomeList2.get(random162-1).getChromosomeBinar().substring(0, Lokus);
+                    String EndOneOf2 = ChromosomeList2.get(random16-1).getChromosomeBinar().substring(Lokus, ChromosomeList.get(i).getChromosomeBinar().length());
+                    String EndTwoOf2 = ChromosomeList2.get(random162-1).getChromosomeBinar().substring(Lokus, ChromosomeList.get(i).getChromosomeBinar().length());
+                    String One = BegOneOf2+EndTwoOf2;
+                    String Two = BegTwoOf2+EndOneOf2;
+                    ChromosomeList.get(PkhelperNumber-2).setChromosomeBinar(One);
+                    ChromosomeList.get(PkhelperNumber-1).setChromosomeBinar(Two);
+                }
+            }
+
+            for(int i = 0; i < ChromosomesNumber; i++) {
+                double x = RandomPercentageNumber();
+                int Lokus = RandomNumberLokusPm();
+                if (x < Pm) {
+                    String Beg = ChromosomeList.get(i).getChromosomeBinar().substring(0, Lokus-1);
+                    String End = ChromosomeList.get(i).getChromosomeBinar().substring(Lokus);
+                    String Mutate = ChromosomeList.get(i).getChromosomeBinar().substring(Lokus-1, Lokus);
+                    if(Mutate.equals("0")){
+                        String ChromosomeBinarFinal = Beg+"1"+End;
+                        ChromosomeList.get(i).setChromosomeBinar(ChromosomeBinarFinal);
+                    }
+                    else if(Mutate.equals("1")){
+                        String ChromosomeBinarFinal = Beg+"1"+End;
+                        ChromosomeList.get(i).setChromosomeBinar(ChromosomeBinarFinal);
+                    }
+                }
+            }
+
+
+
+            NumOfIterations++;
+            if (ValueOfFitFunForAllChromosomes > Final) {
+                Final = ValueOfFitFunForAllChromosomes;
                 NumOfFitListIterations = 1;
-            } else if (ValueOfFitFun == Final) {
+            } else if (ValueOfFitFunForAllChromosomes == Final) {
                 NumOfFitListIterations++;
             }
             if (NumOfFitListIterations == NumOfMaxFitFunOccur) {
+                System.out.println(NumOfIterations);
                 break;
             }
-            */
 
-        //}
-
+        }
     }
 
     public static int RandomNumberChromosome() {
         Random r = new Random();
-        return r.nextInt((1023 - 1) + 1) + 1;
+        return r.nextInt((1023 - 1) + 1);
     }
     public static double RandomPercentageNumber() {
         return (Math.random() * (1));
