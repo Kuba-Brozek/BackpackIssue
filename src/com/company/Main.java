@@ -77,7 +77,7 @@ public class Main {
         }
 
         int Final = 0;
-        int FinalCh = 0;
+        int FinalValue = 0;
         for(;;) {
             int ValueOfFitFunForAllChromosomes = 0;
             double PercentageIterationValue = 0.00;
@@ -133,24 +133,25 @@ public class Main {
                 System.out.println(ChromosomeList.get(j).getChromosomeBinar());
                 System.out.println(ChromosomeList.get(j).getValueOfChromosome());
 
-                if(ChromosomeList.get(j).getCh() > FinalCh){
-                    FinalCh = ChromosomeList.get(j).getCh();
+                /*if(ChromosomeList.get(j).getValueOfChromosome() > FinalValue){
+                    FinalValue = ChromosomeList.get(j).getValueOfChromosome();
                     NumOfFitListIterations = 1;
                 }
-                else if (ChromosomeList.get(j).getCh() == FinalCh){
+                else if (ChromosomeList.get(j).getValueOfChromosome() == FinalValue){
                     NumOfFitListIterations++;
-                }
+                }*/
 
             }
+            /*
             if (ValueOfFitFunForAllChromosomes > Final) {
                 Final = ValueOfFitFunForAllChromosomes;
             }
             if(NumOfFitListIterations == NumOfMaxFitFunOccur){
                 break;
             }
+*/
 
 
-            /*
             if (ValueOfFitFunForAllChromosomes > Final) {
                 Final = ValueOfFitFunForAllChromosomes;
                 NumOfFitListIterations = 1;
@@ -159,7 +160,7 @@ public class Main {
             }
             if (NumOfFitListIterations == NumOfMaxFitFunOccur) {
                 break;
-            } */
+            }
 
 
             System.out.println(ValueOfFitFunForAllChromosomes);
@@ -239,8 +240,8 @@ public class Main {
             NumOfIterations++;
         }
         System.out.println(" | Liczba iteracji: " + NumOfIterations+ " | ");
-        System.out.println("Największy fenotyp: "+FinalCh);
-        //System.out.println(" | Suma funkcji przystosowania: "+ Final + " | ");
+        //System.out.println("Największy fenotyp: "+FinalValue);
+        System.out.println(" | Suma funkcji przystosowania: "+ Final + " | ");
         for(int i = 0; i< ChromosomesNumber; i++){
             int j = i+1;
             System.out.print(" | CH"+j+ " = " + ChromosomeList.get(i).getChromosomeBinar()+ " | ");
