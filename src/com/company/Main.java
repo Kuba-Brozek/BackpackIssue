@@ -56,13 +56,13 @@ public class Main {
         VWList.add(new VW(12,4));
         VWList.add(new VW(6,8));
         VWList.add(new VW(8,6));
-
+        System.out.println(" | Początkowa pula chromosomów | ");
         for ( int i=0; i<ChromosomesNumber; i++){
             int RandNumHelper = RandomNumberChromosome();
             ChromosomeList.add(new Chromosome(RandNumHelper, 0.0));
             ChromosomeList2.add(new Chromosome(RandNumHelper, 0.0));
             PercentageRangeList.add(new PercentageRangeClass(0.0,0.0));
-            System.out.println(" | Początkowa pula chromosomów: " + ChromosomeList.get(i).getCh() + " | ");
+            System.out.print(" |  " + ChromosomeList.get(i).getCh() + " | ");
         }
 
         for(int i = 0; i < ChromosomesNumber; i++) {
@@ -85,7 +85,6 @@ public class Main {
             int ValueOfFitFun = 0;
 
             for (int j = 0; j < ChromosomesNumber; j++) {
-                System.out.println(ChromosomeList.get(j).getChromosomeBinar());
                 //that loop calculates Weight of each chromosome based on users keyboard input, checks if weight is bigger than admissible, and if so it throws one of bits from 1 to 0 untill
                 // it finds first weight which is below limit
                 int WeightOfFitFun = 0;
@@ -96,7 +95,6 @@ public class Main {
                     WeightOfFitFun += CalculatedWeight;
                 }
                 ChromosomeList.get(j).setWeightOfChromosome(WeightOfFitFun);
-                System.out.println(ChromosomeList.get(j).getWeightOfChromosome());
                 if (MaxWeight < ChromosomeList.get(j).getWeightOfChromosome()){
                     for (;;) {
                         int Bit = RandomNumberLokusPm();
@@ -130,28 +128,8 @@ public class Main {
                 }
                 ChromosomeList.get(j).setValueOfChromosome(ValueofFitFun);
                 ValueOfFitFunForAllChromosomes += ChromosomeList.get(j).getValueOfChromosome();
-                System.out.println(ChromosomeList.get(j).getChromosomeBinar());
-                System.out.println(ChromosomeList.get(j).getValueOfChromosome());
-
-                /*if(ChromosomeList.get(j).getValueOfChromosome() > FinalValue){
-                    FinalValue = ChromosomeList.get(j).getValueOfChromosome();
-                    NumOfFitListIterations = 1;
-                }
-                else if (ChromosomeList.get(j).getValueOfChromosome() == FinalValue){
-                    NumOfFitListIterations++;
-                }*/
 
             }
-            /*
-            if (ValueOfFitFunForAllChromosomes > Final) {
-                Final = ValueOfFitFunForAllChromosomes;
-            }
-            if(NumOfFitListIterations == NumOfMaxFitFunOccur){
-                break;
-            }
-*/
-
-
             if (ValueOfFitFunForAllChromosomes > Final) {
                 Final = ValueOfFitFunForAllChromosomes;
                 NumOfFitListIterations = 1;
@@ -163,8 +141,6 @@ public class Main {
             }
 
 
-            System.out.println(ValueOfFitFunForAllChromosomes);
-
             for(int i = 0; i<ChromosomesNumber; i++){
                 ChromosomeList.get(i).setPercent(PercentageValue(ChromosomeList.get(i).getValueOfChromosome(),ValueOfFitFunForAllChromosomes));
             }
@@ -172,8 +148,6 @@ public class Main {
                 aValuePercent = PercentageIterationValue;
                 PercentageIterationValue += ChromosomeList.get(i).getPercent();
                 PercentageRangeList.set(i, new PercentageRangeClass(aValuePercent, PercentageIterationValue));
-                System.out.println(PercentageRangeList.get(i).getA() + " ");
-                System.out.print(PercentageRangeList.get(i).getB());
             }
             for(int i=0; i< ChromosomesNumber; i++){
                 double x = RandomPercentageNumber();
@@ -239,15 +213,15 @@ public class Main {
             }
             NumOfIterations++;
         }
-        System.out.println(" | Liczba iteracji: " + NumOfIterations+ " | ");
+        System.out.println("\n | Liczba iteracji: " + NumOfIterations+ " | ");
         //System.out.println("Największy fenotyp: "+FinalValue);
-        System.out.println(" | Suma funkcji przystosowania: "+ Final + " | ");
+        System.out.println(" | Największa funkcja przystosowania: "+ Final/6 + " | ");
         for(int i = 0; i< ChromosomesNumber; i++){
             int j = i+1;
             System.out.print(" | CH"+j+ " = " + ChromosomeList.get(i).getChromosomeBinar()+ " | ");
             System.out.print(" | Fenotyp: " + ChromosomeList.get(i).getCh()+ " | ");
-            System.out.print(" | Funkcja przystosowania: " + ChromosomeList.get(i).getValueOfChromosome()+ " | ");
-            System.out.println(" | Waga chromosomu: " + ChromosomeList.get(i).getWeightOfChromosome()+ " | ");
+            System.out.print(" | Wartość plecaka: " + ChromosomeList.get(i).getValueOfChromosome()+ " | ");
+            System.out.println(" | Waga plecaka: " + ChromosomeList.get(i).getWeightOfChromosome()+ " | ");
         }
     }
 
