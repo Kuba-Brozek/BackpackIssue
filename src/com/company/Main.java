@@ -14,19 +14,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj liczbe chromosomów: ");
         int ChromosomesNumber = scanner.nextInt();
-        /*
-        System.out.println("Podaj wagę dla każdego bitu");
-        for(int i = 0; i< 10; i++){
-            int Weight = scanner.nextInt();
-            WeightList.add(i, Weight);
-            WeightListCalculated.add(i, 0);
-        }
-        System.out.println("Podaj wartość dla każdego bitu");
-        for(int i = 0; i< 10; i++){
-            int Value = scanner.nextInt();
-            ValueList.add(i, Value);
-            ValueListCalculated.add(i, 0);
-        }*/
 
         System.out.println("Podaj Pk i Pm jako wartość od 0 do 1 w typie double: ");
         double Pk = scanner.nextDouble();
@@ -72,7 +59,6 @@ public class Main {
             }
             String BinarValue = BinarValueBuilder.toString();
             ChromosomeList.get(i).setChromosomeBinar(BinarValue);
-
             ChromosomeList2.get(i).setChromosomeBinar(BinarValue);
         }
 
@@ -117,7 +103,6 @@ public class Main {
                     }
                 }
             }
-
             for(int j = 0; j < ChromosomesNumber; j++){
                 int ValueofFitFun = 0;
                 int CalculatedValue = 0;
@@ -128,7 +113,6 @@ public class Main {
                 }
                 ChromosomeList.get(j).setValueOfChromosome(ValueofFitFun);
                 ValueOfFitFunForAllChromosomes += ChromosomeList.get(j).getValueOfChromosome();
-
             }
             if (ValueOfFitFunForAllChromosomes > Final) {
                 Final = ValueOfFitFunForAllChromosomes;
@@ -139,7 +123,6 @@ public class Main {
             if (NumOfFitListIterations == NumOfMaxFitFunOccur) {
                 break;
             }
-
 
             for(int i = 0; i<ChromosomesNumber; i++){
                 ChromosomeList.get(i).setPercent(PercentageValue(ChromosomeList.get(i).getValueOfChromosome(),ValueOfFitFunForAllChromosomes));
@@ -187,7 +170,6 @@ public class Main {
                     ChromosomeList.get(PkhelperNumber-1).setChromosomeBinar(Two);
                 }
             }
-
             for(int i = 0; i < ChromosomesNumber; i++) {
                 double x = RandomPercentageNumber();
                 int Lokus = RandomNumberLokusPm();
@@ -205,7 +187,6 @@ public class Main {
                     }
                 }
             }
-
             for(int i = 0; i< ChromosomesNumber; i++){
                 int decimal = Integer.parseInt(ChromosomeList.get(i).getChromosomeBinar(), 2);
                 ChromosomeList.get(i).setCh(decimal);
