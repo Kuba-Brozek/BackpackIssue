@@ -182,7 +182,7 @@ public class Main {
                         ChromosomeList.get(i).setChromosomeBinar(ChromosomeBinarFinal);
                     }
                     else if(Mutate.equals("1")){
-                        String ChromosomeBinarFinal = Beg+"1"+End;
+                        String ChromosomeBinarFinal = Beg+"0"+End;
                         ChromosomeList.get(i).setChromosomeBinar(ChromosomeBinarFinal);
                     }
                 }
