@@ -5,14 +5,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    private static ArrayList<Chromosome> ChromosomeList = new ArrayList<>();
-    private static ArrayList<Chromosome> ChromosomeList2 = new ArrayList<>();
-    private static ArrayList<VW> VWList = new ArrayList<>();
-    private static ArrayList<PercentageRangeClass> PercentageRangeList = new ArrayList<>();
+    private static final ArrayList<Chromosome> ChromosomeList = new ArrayList<>();
+    private static final ArrayList<Chromosome> ChromosomeList2 = new ArrayList<>();
+    private static final ArrayList<VW> VWList = new ArrayList<>();
+    private static final ArrayList<PercentageRangeClass> PercentageRangeList = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj liczbe chromosomów: ");
+        System.out.println("Podaj liczbę chromosomów: ");
         int ChromosomesNumber = scanner.nextInt();
 
         System.out.println("Podaj Pk i Pm jako wartość od 0 do 1 w typie double: ");
@@ -23,16 +23,8 @@ public class Main {
         System.out.println("Podaj liczbę maksymalnych wystąpień wartości funkcji przystosowania");
         int NumOfMaxFitFunOccur = scanner.nextInt();
         int NumOfFitListIterations = 0;
-
         int NumOfIterations = 0;
 
-        /*for(int i = 0; i< 10; i++){
-        System.out.println("Podaj Wagę i Wartość dla " + i + " bitu: ");
-            int Weight = scanner.nextInt();
-            int Value = scanner.nextInt();
-            VWList.add(new VW(Weight, Value));
-        }
-        */
         VWList.add(new VW(4,12));
         VWList.add(new VW(9,6));
         VWList.add(new VW(12,10));
@@ -63,18 +55,16 @@ public class Main {
         }
 
         int Final = 0;
-        int FinalValue = 0;
         for(;;) {
             int ValueOfFitFunForAllChromosomes = 0;
             double PercentageIterationValue = 0.00;
-            double aValuePercent = 0;
-            int ValueOfFitFun = 0;
+            double aValuePercent;
 
             for (int j = 0; j < ChromosomesNumber; j++) {
-                //that loop calculates Weight of each chromosome based on users keyboard input, checks if weight is bigger than admissible, and if so it throws one of bits from 1 to 0 untill
+                //that loop calculates Weight of each chromosome based on users keyboard input, checks if weight is bigger than admissible, and if so it throws one of bits from 1 to 0 until
                 // it finds first weight which is below limit
                 int WeightOfFitFun = 0;
-                int CalculatedWeight = 0;
+                int CalculatedWeight;
                 for (int i = 0; i < 10; i++) {
                     char Checker = ChromosomeList.get(j).getChromosomeBinar().charAt(i);
                     CalculatedWeight = Integer.parseInt(String.valueOf(Checker)) * VWList.get(i).getWeight();
@@ -105,7 +95,7 @@ public class Main {
             }
             for(int j = 0; j < ChromosomesNumber; j++){
                 int ValueofFitFun = 0;
-                int CalculatedValue = 0;
+                int CalculatedValue;
                 for (int i = 0; i < 10; i++) {
                     char Checker = ChromosomeList.get(j).getChromosomeBinar().charAt(i);
                     CalculatedValue = Integer.parseInt(String.valueOf(Checker)) * VWList.get(i).getValue();
@@ -227,9 +217,6 @@ public class Main {
     }
 
     public static double PercentageValue(int a, int b){
-        double c = a;
-        double d = b;
-        double x = c/ d;
-        return x;
+        return (double) a / (double) b;
     }
 }

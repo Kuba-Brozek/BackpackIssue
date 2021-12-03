@@ -1,0 +1,7 @@
+line 29: Main
+
+/*for(int i = 0; i< 10; i++){
+        System.out.println("Podaj Wagę i Wartość dla " + i + " bitu: ");
+            int Weight = scanner.nextInt();
+            int Value = scanner.nextInt();
+            VWList.add(new VW(Weight, Value));}*/
